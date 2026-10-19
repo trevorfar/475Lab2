@@ -1,0 +1,105 @@
+ELEC 475 Lab 2 Post-Lab - commands to run, in order
+====================================================
+Run everything from the repo root (the folder containing train.py).
+Each train.py run writes:  checkpoints/<name>.pth, results/<name>.json (per-epoch history), and the --plot-file if given.
+
+----------------------------------------------------------------
+0. Setup (once)
+----------------------------------------------------------------
+python -m venv .venv
+source .venv/bin/activate              # Windows PowerShell: .\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python download_datasets.py            # CIFAR-10 + Tiny ImageNet-200 into ./data
+python -c "import torch; print('CUDA:', torch.cuda.is_available())"
+
+Optional: add  --num-workers 4  (or more) to any train.py command if data loading is the bottleneck.
+
+----------------------------------------------------------------
+1. Architecture checks (fast)
+----------------------------------------------------------------
+python -m models.lenet
+python -m models.lenet_modern
+python -m models.alexnet                 # expect 6,611,402 params (spec table works out to 6.61M, manual says ~6.3M)
+python -m report.arch_tables 10          # per-layer shapes / params / receptive fields -> report/arch_tables_10.json
+python -m report.arch_tables 200
+
+----------------------------------------------------------------
+2. EASIEST: run every training job with one script
+----------------------------------------------------------------
+./run_all.sh                             # uses `python`; or: PY=/path/to/python ./run_all.sh
+                                         # skips any run whose results/<name>.json already exists, so it is safe to re-launch
+
+   ...or run the individual commands below (same thing, same order).
+
+----------------------------------------------------------------
+3. LeNet baselines on CIFAR-10 (5 epochs, no augmentation)
+----------------------------------------------------------------
+python train.py --model lenet        --dataset cifar10 --epochs 5 --seed 42 --no-augment --plot-file plots/loss_lenet.png        --save-model checkpoints/lenet_baseline.pth --results-file results/lenet_baseline.json
+python train.py --model lenet_modern --dataset cifar10 --epochs 5 --seed 42 --no-augment --plot-file plots/loss_lenet_modern.png --save-model checkpoints/lenet_modern.pth   --results-file results/lenet_modern.json
+
+----------------------------------------------------------------
+4. Step 2 - Normalization study (AlexNet, CIFAR-10, 10 epochs, no augmentation)
+----------------------------------------------------------------
+python train.py --model alexnet --norm none --dataset cifar10 --epochs 10 --seed 42 --no-augment --plot-file plots/loss_alexnet_none.png --save-model checkpoints/alexnet_none.pth --results-file results/alexnet_none.json
+python train.py --model alexnet --norm lrn  --dataset cifar10 --epochs 10 --seed 42 --no-augment --plot-file plots/loss_alexnet_lrn.png  --save-model checkpoints/alexnet_lrn.pth  --results-file results/alexnet_lrn.json
+python train.py --model alexnet --norm bn   --dataset cifar10 --epochs 10 --seed 42 --no-augment --plot-file plots/loss_alexnet_bn.png   --save-model checkpoints/alexnet_bn.pth   --results-file results/alexnet_bn.json
+
+----------------------------------------------------------------
+5. Step 3 - Data augmentation (AlexNet-BN, CIFAR-10, 15 epochs)
+----------------------------------------------------------------
+python train.py --model alexnet --norm bn --dataset cifar10 --epochs 15 --seed 42 --no-augment --plot-file plots/loss_no_aug.png   --save-model checkpoints/alexnet_no_aug.pth   --results-file results/alexnet_no_aug.json
+python train.py --model alexnet --norm bn --dataset cifar10 --epochs 15 --seed 42              --plot-file plots/loss_with_aug.png --save-model checkpoints/alexnet_with_aug.pth --results-file results/alexnet_with_aug.json
+
+----------------------------------------------------------------
+6. Step 4 - Tiny ImageNet-200 (AlexNet-BN + augmentation, 10 epochs)
+----------------------------------------------------------------
+python train.py --model alexnet --norm bn --dataset tiny_imagenet --epochs 10 --seed 42 --plot-file plots/loss_tiny_imagenet.png --save-model checkpoints/alexnet_tiny_imagenet.pth --results-file results/alexnet_tiny_imagenet.json
+
+----------------------------------------------------------------
+7. PyTorch Zoo AlexNet baseline (CIFAR-10, 10 epochs)
+----------------------------------------------------------------
+python train.py --model zoo_alexnet --dataset cifar10 --epochs 10 --seed 42 --no-augment --plot-file plots/loss_zoo_alexnet.png --save-model checkpoints/zoo_alexnet.pth --results-file results/zoo_alexnet.json
+
+----------------------------------------------------------------
+8. Multi-seed runs (for Mean +/- Std; seed 42 runs above count as the first seed)
+----------------------------------------------------------------
+python train.py --model lenet        --dataset cifar10 --epochs 5 --seed 123 --no-augment --save-model checkpoints/lenet_baseline_s123.pth --results-file results/lenet_baseline_s123.json
+python train.py --model lenet_modern --dataset cifar10 --epochs 5 --seed 123 --no-augment --save-model checkpoints/lenet_modern_s123.pth   --results-file results/lenet_modern_s123.json
+python train.py --model lenet        --dataset cifar10 --epochs 5 --seed 999 --no-augment --save-model checkpoints/lenet_baseline_s999.pth --results-file results/lenet_baseline_s999.json
+python train.py --model lenet_modern --dataset cifar10 --epochs 5 --seed 999 --no-augment --save-model checkpoints/lenet_modern_s999.pth   --results-file results/lenet_modern_s999.json
+python train.py --model alexnet --norm bn --dataset cifar10 --epochs 10 --seed 123 --no-augment --save-model checkpoints/alexnet_bn_s123.pth --results-file results/alexnet_bn_s123.json
+python train.py --model alexnet --norm bn --dataset cifar10 --epochs 10 --seed 999 --no-augment --save-model checkpoints/alexnet_bn_s999.pth --results-file results/alexnet_bn_s999.json
+
+----------------------------------------------------------------
+9. Extended ablation - learning-rate sensitivity of AlexNet-BN (compare against alexnet_bn at lr=1e-3)
+----------------------------------------------------------------
+python train.py --model alexnet --norm bn --dataset cifar10 --epochs 10 --seed 42 --no-augment --lr 1e-4 --plot-file plots/loss_alexnet_bn_lr1e-4.png --save-model checkpoints/alexnet_bn_lr1e-4.pth --results-file results/alexnet_bn_lr1e-4.json
+python train.py --model alexnet --norm bn --dataset cifar10 --epochs 10 --seed 42 --no-augment --lr 3e-3 --plot-file plots/loss_alexnet_bn_lr3e-3.png --save-model checkpoints/alexnet_bn_lr3e-3.pth --results-file results/alexnet_bn_lr3e-3.json
+
+----------------------------------------------------------------
+10. Tiny ImageNet column for the other master-table rows (10 epochs, no augmentation)
+----------------------------------------------------------------
+python train.py --model lenet        --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_lenet_baseline.pth --results-file results/tiny_lenet_baseline.json
+python train.py --model lenet_modern --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_lenet_modern.pth   --results-file results/tiny_lenet_modern.json
+python train.py --model alexnet --norm bn   --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_alexnet_bn.pth   --results-file results/tiny_alexnet_bn.json
+python train.py --model alexnet --norm none --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_alexnet_none.pth --results-file results/tiny_alexnet_none.json
+python train.py --model zoo_alexnet         --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_zoo_alexnet.pth  --results-file results/tiny_zoo_alexnet.json
+python train.py --model alexnet --norm lrn  --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_alexnet_lrn.pth  --results-file results/tiny_alexnet_lrn.json
+
+----------------------------------------------------------------
+11. After training: benchmarks, evaluation, figures (run on an otherwise idle machine for clean latency numbers)
+----------------------------------------------------------------
+python compare_models.py --dataset cifar10 --device cuda         > report/compare_models_cifar10.txt
+python compare_models.py --dataset tiny_imagenet --device cuda   > report/compare_models_tiny_imagenet.txt
+python demo_transforms.py                                        > report/demo_transforms_output.txt
+python utils/eda.py --dataset both                               > report/eda_output.txt
+python evaluate.py --checkpoint checkpoints/alexnet_with_aug.pth      --model alexnet --norm bn --dataset cifar10
+python evaluate.py --checkpoint checkpoints/alexnet_tiny_imagenet.pth --model alexnet --norm bn --dataset tiny_imagenet
+python -m utils.visualization --plot-ablation    # -> plots/ablation_summary.png, ablation_summary_tiny_imagenet.png,
+                                                 #    loss_norm_comparison.png, loss_aug_comparison.png, loss_dataset_comparison.png
+
+----------------------------------------------------------------
+12. Push results
+----------------------------------------------------------------
+git add results plots checkpoints report && git commit -m "Add post-lab experiment results" && git push
+(zoo_alexnet checkpoints are ~230 MB and are git-ignored - GitHub rejects files over 100 MB)

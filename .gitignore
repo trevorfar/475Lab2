@@ -1,0 +1,20 @@
+# Datasets are downloaded by download_datasets.py - never commit them
+data/
+*.tar.gz
+*.zip
+
+# Environments & caches
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Run logs
+logs/
+logs_queue.txt
+
+# Zoo AlexNet checkpoints are ~230 MB (over GitHub's 100 MB limit)
+checkpoints/*zoo*.pth
+
+# Course handout
+ELEC475_Lab2_Pre-lab.pdf

@@ -1,0 +1,47 @@
+# ELEC 475 Lab 2 - exact commands used to produce every result in the report
+# Environment: python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+# All runs: Adam (lr=1e-3 unless noted, weight_decay=1e-4), batch 128, 64x64 input.
+# Equivalent one-shot driver: ./run_all.sh  (skips runs whose results/<name>.json already exist)
+
+# ---------------- Pre-Lab ----------------
+python download_datasets.py
+python utils/eda.py --dataset both
+python prelab_verify.py
+python demo_transforms.py
+
+# ---------------- Architecture checks ----------------
+python -m models.lenet
+python -m models.lenet_modern
+python -m models.alexnet
+
+python train.py --model lenet        --dataset cifar10 --epochs 5 --seed 42 --no-augment --plot-file plots/loss_lenet.png --save-model checkpoints/lenet_baseline.pth --results-file results/lenet_baseline.json
+python train.py --model lenet_modern --dataset cifar10 --epochs 5 --seed 42 --no-augment --plot-file plots/loss_lenet_modern.png --save-model checkpoints/lenet_modern.pth --results-file results/lenet_modern.json
+python train.py --model alexnet --norm none --dataset cifar10 --epochs 10 --seed 42 --no-augment --plot-file plots/loss_alexnet_none.png --save-model checkpoints/alexnet_none.pth --results-file results/alexnet_none.json
+python train.py --model alexnet --norm lrn  --dataset cifar10 --epochs 10 --seed 42 --no-augment --plot-file plots/loss_alexnet_lrn.png --save-model checkpoints/alexnet_lrn.pth --results-file results/alexnet_lrn.json
+python train.py --model alexnet --norm bn   --dataset cifar10 --epochs 10 --seed 42 --no-augment --plot-file plots/loss_alexnet_bn.png --save-model checkpoints/alexnet_bn.pth --results-file results/alexnet_bn.json
+python train.py --model alexnet --norm bn --dataset cifar10 --epochs 15 --seed 42 --no-augment --plot-file plots/loss_no_aug.png --save-model checkpoints/alexnet_no_aug.pth --results-file results/alexnet_no_aug.json
+python train.py --model alexnet --norm bn --dataset cifar10 --epochs 15 --seed 42 --plot-file plots/loss_with_aug.png --save-model checkpoints/alexnet_with_aug.pth --results-file results/alexnet_with_aug.json
+python train.py --model alexnet --norm bn --dataset tiny_imagenet --epochs 10 --seed 42 --plot-file plots/loss_tiny_imagenet.png --save-model checkpoints/alexnet_tiny_imagenet.pth --results-file results/alexnet_tiny_imagenet.json
+python train.py --model zoo_alexnet --dataset cifar10 --epochs 10 --seed 42 --no-augment --plot-file plots/loss_zoo_alexnet.png --save-model checkpoints/zoo_alexnet.pth --results-file results/zoo_alexnet.json
+for s in 123 999; do
+    python train.py --model lenet        --dataset cifar10 --epochs 5 --seed $s --no-augment --save-model checkpoints/lenet_baseline_s$s.pth --results-file results/lenet_baseline_s$s.json
+    python train.py --model lenet_modern --dataset cifar10 --epochs 5 --seed $s --no-augment --save-model checkpoints/lenet_modern_s$s.pth --results-file results/lenet_modern_s$s.json
+done
+for s in 123 999; do
+    python train.py --model alexnet --norm bn --dataset cifar10 --epochs 10 --seed $s --no-augment --save-model checkpoints/alexnet_bn_s$s.pth --results-file results/alexnet_bn_s$s.json
+done
+python train.py --model alexnet --norm bn --dataset cifar10 --epochs 10 --seed 42 --no-augment --lr 1e-4 --plot-file plots/loss_alexnet_bn_lr1e-4.png --save-model checkpoints/alexnet_bn_lr1e-4.pth --results-file results/alexnet_bn_lr1e-4.json
+python train.py --model alexnet --norm bn --dataset cifar10 --epochs 10 --seed 42 --no-augment --lr 3e-3 --plot-file plots/loss_alexnet_bn_lr3e-3.png --save-model checkpoints/alexnet_bn_lr3e-3.pth --results-file results/alexnet_bn_lr3e-3.json
+python train.py --model lenet        --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_lenet_baseline.pth --results-file results/tiny_lenet_baseline.json
+python train.py --model lenet_modern --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_lenet_modern.pth --results-file results/tiny_lenet_modern.json
+python train.py --model alexnet --norm bn   --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_alexnet_bn.pth --results-file results/tiny_alexnet_bn.json
+python train.py --model alexnet --norm none --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_alexnet_none.pth --results-file results/tiny_alexnet_none.json
+python train.py --model zoo_alexnet         --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_zoo_alexnet.pth --results-file results/tiny_zoo_alexnet.json
+python train.py --model alexnet --norm lrn  --dataset tiny_imagenet --epochs 10 --seed 42 --no-augment --save-model checkpoints/tiny_alexnet_lrn.pth --results-file results/tiny_alexnet_lrn.json
+
+# ---------------- Complexity benchmark, evaluation & plots ----------------
+python compare_models.py --dataset cifar10 --device cuda        # falls back to CPU when CUDA is unavailable
+python compare_models.py --dataset tiny_imagenet --device cuda
+python evaluate.py --checkpoint checkpoints/alexnet_with_aug.pth --model alexnet --norm bn --dataset cifar10
+python evaluate.py --checkpoint checkpoints/alexnet_tiny_imagenet.pth --model alexnet --norm bn --dataset tiny_imagenet
+python -m utils.visualization --plot-ablation

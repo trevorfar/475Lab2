@@ -1,0 +1,1298 @@
+{
+ "lenet": {
+  "rows": [
+   {
+    "name": "feature_extractor.0",
+    "type": "Conv2d",
+    "spec": "3->6, k=5, s=1, p=0",
+    "out": [
+     6,
+     60,
+     60
+    ],
+    "params": 456,
+    "rf": 5,
+    "jump": 1
+   },
+   {
+    "name": "feature_extractor.1",
+    "type": "Tanh",
+    "spec": "",
+    "out": [
+     6,
+     60,
+     60
+    ],
+    "params": 0,
+    "rf": 5,
+    "jump": 1
+   },
+   {
+    "name": "feature_extractor.2",
+    "type": "AvgPool2d",
+    "spec": "k=2, s=2",
+    "out": [
+     6,
+     30,
+     30
+    ],
+    "params": 0,
+    "rf": 6,
+    "jump": 2
+   },
+   {
+    "name": "feature_extractor.3",
+    "type": "Conv2d",
+    "spec": "6->16, k=5, s=1, p=0",
+    "out": [
+     16,
+     26,
+     26
+    ],
+    "params": 2416,
+    "rf": 14,
+    "jump": 2
+   },
+   {
+    "name": "feature_extractor.4",
+    "type": "Tanh",
+    "spec": "",
+    "out": [
+     16,
+     26,
+     26
+    ],
+    "params": 0,
+    "rf": 14,
+    "jump": 2
+   },
+   {
+    "name": "feature_extractor.5",
+    "type": "AvgPool2d",
+    "spec": "k=2, s=2",
+    "out": [
+     16,
+     13,
+     13
+    ],
+    "params": 0,
+    "rf": 16,
+    "jump": 4
+   },
+   {
+    "name": "classifier.0",
+    "type": "Linear",
+    "spec": "2704->120",
+    "out": [
+     120
+    ],
+    "params": 324600,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.1",
+    "type": "Tanh",
+    "spec": "",
+    "out": [
+     120
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.2",
+    "type": "Linear",
+    "spec": "120->84",
+    "out": [
+     84
+    ],
+    "params": 10164,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.3",
+    "type": "Tanh",
+    "spec": "",
+    "out": [
+     84
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.4",
+    "type": "Linear",
+    "spec": "84->10",
+    "out": [
+     10
+    ],
+    "params": 850,
+    "rf": null,
+    "jump": null
+   }
+  ],
+  "total_params": 338486
+ },
+ "lenet_modern": {
+  "rows": [
+   {
+    "name": "feature_extractor.0",
+    "type": "Conv2d",
+    "spec": "3->6, k=5, s=1, p=2",
+    "out": [
+     6,
+     64,
+     64
+    ],
+    "params": 456,
+    "rf": 5,
+    "jump": 1
+   },
+   {
+    "name": "feature_extractor.1",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     6,
+     64,
+     64
+    ],
+    "params": 0,
+    "rf": 5,
+    "jump": 1
+   },
+   {
+    "name": "feature_extractor.2",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     6,
+     31,
+     31
+    ],
+    "params": 0,
+    "rf": 7,
+    "jump": 2
+   },
+   {
+    "name": "feature_extractor.3",
+    "type": "Conv2d",
+    "spec": "6->16, k=5, s=1, p=2",
+    "out": [
+     16,
+     31,
+     31
+    ],
+    "params": 2416,
+    "rf": 15,
+    "jump": 2
+   },
+   {
+    "name": "feature_extractor.4",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     16,
+     31,
+     31
+    ],
+    "params": 0,
+    "rf": 15,
+    "jump": 2
+   },
+   {
+    "name": "feature_extractor.5",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     16,
+     15,
+     15
+    ],
+    "params": 0,
+    "rf": 19,
+    "jump": 4
+   },
+   {
+    "name": "classifier.0",
+    "type": "Linear",
+    "spec": "3600->120",
+    "out": [
+     120
+    ],
+    "params": 432120,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.1",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     120
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.2",
+    "type": "Linear",
+    "spec": "120->84",
+    "out": [
+     84
+    ],
+    "params": 10164,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.3",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     84
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.4",
+    "type": "Linear",
+    "spec": "84->10",
+    "out": [
+     10
+    ],
+    "params": 850,
+    "rf": null,
+    "jump": null
+   }
+  ],
+  "total_params": 446006
+ },
+ "alexnet_none": {
+  "rows": [
+   {
+    "name": "features.0",
+    "type": "Conv2d",
+    "spec": "3->64, k=5, s=2, p=2",
+    "out": [
+     64,
+     32,
+     32
+    ],
+    "params": 4864,
+    "rf": 5,
+    "jump": 2
+   },
+   {
+    "name": "features.2",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     64,
+     32,
+     32
+    ],
+    "params": 0,
+    "rf": 5,
+    "jump": 2
+   },
+   {
+    "name": "features.3",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     64,
+     15,
+     15
+    ],
+    "params": 0,
+    "rf": 9,
+    "jump": 4
+   },
+   {
+    "name": "features.4",
+    "type": "Conv2d",
+    "spec": "64->192, k=5, s=1, p=2",
+    "out": [
+     192,
+     15,
+     15
+    ],
+    "params": 307392,
+    "rf": 25,
+    "jump": 4
+   },
+   {
+    "name": "features.6",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     192,
+     15,
+     15
+    ],
+    "params": 0,
+    "rf": 25,
+    "jump": 4
+   },
+   {
+    "name": "features.7",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     192,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 33,
+    "jump": 8
+   },
+   {
+    "name": "features.8",
+    "type": "Conv2d",
+    "spec": "192->384, k=3, s=1, p=1",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 663936,
+    "rf": 49,
+    "jump": 8
+   },
+   {
+    "name": "features.10",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 49,
+    "jump": 8
+   },
+   {
+    "name": "features.11",
+    "type": "Conv2d",
+    "spec": "384->384, k=3, s=1, p=1",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 1327488,
+    "rf": 65,
+    "jump": 8
+   },
+   {
+    "name": "features.13",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 65,
+    "jump": 8
+   },
+   {
+    "name": "features.14",
+    "type": "Conv2d",
+    "spec": "384->256, k=3, s=1, p=1",
+    "out": [
+     256,
+     7,
+     7
+    ],
+    "params": 884992,
+    "rf": 81,
+    "jump": 8
+   },
+   {
+    "name": "features.16",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     256,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 81,
+    "jump": 8
+   },
+   {
+    "name": "features.17",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     256,
+     3,
+     3
+    ],
+    "params": 0,
+    "rf": 97,
+    "jump": 16
+   },
+   {
+    "name": "classifier.1",
+    "type": "Linear",
+    "spec": "2304->1024",
+    "out": [
+     1024
+    ],
+    "params": 2360320,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.2",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     1024
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.4",
+    "type": "Linear",
+    "spec": "1024->1024",
+    "out": [
+     1024
+    ],
+    "params": 1049600,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.5",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     1024
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.6",
+    "type": "Linear",
+    "spec": "1024->10",
+    "out": [
+     10
+    ],
+    "params": 10250,
+    "rf": null,
+    "jump": null
+   }
+  ],
+  "total_params": 6608842
+ },
+ "alexnet_lrn": {
+  "rows": [
+   {
+    "name": "features.0",
+    "type": "Conv2d",
+    "spec": "3->64, k=5, s=2, p=2",
+    "out": [
+     64,
+     32,
+     32
+    ],
+    "params": 4864,
+    "rf": 5,
+    "jump": 2
+   },
+   {
+    "name": "features.1",
+    "type": "LocalResponseNorm",
+    "spec": "n=5, a=0.0001, b=0.75, k=2.0",
+    "out": [
+     64,
+     32,
+     32
+    ],
+    "params": 0,
+    "rf": 5,
+    "jump": 2
+   },
+   {
+    "name": "features.2",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     64,
+     32,
+     32
+    ],
+    "params": 0,
+    "rf": 5,
+    "jump": 2
+   },
+   {
+    "name": "features.3",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     64,
+     15,
+     15
+    ],
+    "params": 0,
+    "rf": 9,
+    "jump": 4
+   },
+   {
+    "name": "features.4",
+    "type": "Conv2d",
+    "spec": "64->192, k=5, s=1, p=2",
+    "out": [
+     192,
+     15,
+     15
+    ],
+    "params": 307392,
+    "rf": 25,
+    "jump": 4
+   },
+   {
+    "name": "features.5",
+    "type": "LocalResponseNorm",
+    "spec": "n=5, a=0.0001, b=0.75, k=2.0",
+    "out": [
+     192,
+     15,
+     15
+    ],
+    "params": 0,
+    "rf": 25,
+    "jump": 4
+   },
+   {
+    "name": "features.6",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     192,
+     15,
+     15
+    ],
+    "params": 0,
+    "rf": 25,
+    "jump": 4
+   },
+   {
+    "name": "features.7",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     192,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 33,
+    "jump": 8
+   },
+   {
+    "name": "features.8",
+    "type": "Conv2d",
+    "spec": "192->384, k=3, s=1, p=1",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 663936,
+    "rf": 49,
+    "jump": 8
+   },
+   {
+    "name": "features.10",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 49,
+    "jump": 8
+   },
+   {
+    "name": "features.11",
+    "type": "Conv2d",
+    "spec": "384->384, k=3, s=1, p=1",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 1327488,
+    "rf": 65,
+    "jump": 8
+   },
+   {
+    "name": "features.13",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 65,
+    "jump": 8
+   },
+   {
+    "name": "features.14",
+    "type": "Conv2d",
+    "spec": "384->256, k=3, s=1, p=1",
+    "out": [
+     256,
+     7,
+     7
+    ],
+    "params": 884992,
+    "rf": 81,
+    "jump": 8
+   },
+   {
+    "name": "features.16",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     256,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 81,
+    "jump": 8
+   },
+   {
+    "name": "features.17",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     256,
+     3,
+     3
+    ],
+    "params": 0,
+    "rf": 97,
+    "jump": 16
+   },
+   {
+    "name": "classifier.1",
+    "type": "Linear",
+    "spec": "2304->1024",
+    "out": [
+     1024
+    ],
+    "params": 2360320,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.2",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     1024
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.4",
+    "type": "Linear",
+    "spec": "1024->1024",
+    "out": [
+     1024
+    ],
+    "params": 1049600,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.5",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     1024
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.6",
+    "type": "Linear",
+    "spec": "1024->10",
+    "out": [
+     10
+    ],
+    "params": 10250,
+    "rf": null,
+    "jump": null
+   }
+  ],
+  "total_params": 6608842
+ },
+ "alexnet_bn": {
+  "rows": [
+   {
+    "name": "features.0",
+    "type": "Conv2d",
+    "spec": "3->64, k=5, s=2, p=2",
+    "out": [
+     64,
+     32,
+     32
+    ],
+    "params": 4864,
+    "rf": 5,
+    "jump": 2
+   },
+   {
+    "name": "features.1",
+    "type": "BatchNorm2d",
+    "spec": "64 ch",
+    "out": [
+     64,
+     32,
+     32
+    ],
+    "params": 128,
+    "rf": 5,
+    "jump": 2
+   },
+   {
+    "name": "features.2",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     64,
+     32,
+     32
+    ],
+    "params": 0,
+    "rf": 5,
+    "jump": 2
+   },
+   {
+    "name": "features.3",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     64,
+     15,
+     15
+    ],
+    "params": 0,
+    "rf": 9,
+    "jump": 4
+   },
+   {
+    "name": "features.4",
+    "type": "Conv2d",
+    "spec": "64->192, k=5, s=1, p=2",
+    "out": [
+     192,
+     15,
+     15
+    ],
+    "params": 307392,
+    "rf": 25,
+    "jump": 4
+   },
+   {
+    "name": "features.5",
+    "type": "BatchNorm2d",
+    "spec": "192 ch",
+    "out": [
+     192,
+     15,
+     15
+    ],
+    "params": 384,
+    "rf": 25,
+    "jump": 4
+   },
+   {
+    "name": "features.6",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     192,
+     15,
+     15
+    ],
+    "params": 0,
+    "rf": 25,
+    "jump": 4
+   },
+   {
+    "name": "features.7",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     192,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 33,
+    "jump": 8
+   },
+   {
+    "name": "features.8",
+    "type": "Conv2d",
+    "spec": "192->384, k=3, s=1, p=1",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 663936,
+    "rf": 49,
+    "jump": 8
+   },
+   {
+    "name": "features.9",
+    "type": "BatchNorm2d",
+    "spec": "384 ch",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 768,
+    "rf": 49,
+    "jump": 8
+   },
+   {
+    "name": "features.10",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 49,
+    "jump": 8
+   },
+   {
+    "name": "features.11",
+    "type": "Conv2d",
+    "spec": "384->384, k=3, s=1, p=1",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 1327488,
+    "rf": 65,
+    "jump": 8
+   },
+   {
+    "name": "features.12",
+    "type": "BatchNorm2d",
+    "spec": "384 ch",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 768,
+    "rf": 65,
+    "jump": 8
+   },
+   {
+    "name": "features.13",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     384,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 65,
+    "jump": 8
+   },
+   {
+    "name": "features.14",
+    "type": "Conv2d",
+    "spec": "384->256, k=3, s=1, p=1",
+    "out": [
+     256,
+     7,
+     7
+    ],
+    "params": 884992,
+    "rf": 81,
+    "jump": 8
+   },
+   {
+    "name": "features.15",
+    "type": "BatchNorm2d",
+    "spec": "256 ch",
+    "out": [
+     256,
+     7,
+     7
+    ],
+    "params": 512,
+    "rf": 81,
+    "jump": 8
+   },
+   {
+    "name": "features.16",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     256,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 81,
+    "jump": 8
+   },
+   {
+    "name": "features.17",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     256,
+     3,
+     3
+    ],
+    "params": 0,
+    "rf": 97,
+    "jump": 16
+   },
+   {
+    "name": "classifier.1",
+    "type": "Linear",
+    "spec": "2304->1024",
+    "out": [
+     1024
+    ],
+    "params": 2360320,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.2",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     1024
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.4",
+    "type": "Linear",
+    "spec": "1024->1024",
+    "out": [
+     1024
+    ],
+    "params": 1049600,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.5",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     1024
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.6",
+    "type": "Linear",
+    "spec": "1024->10",
+    "out": [
+     10
+    ],
+    "params": 10250,
+    "rf": null,
+    "jump": null
+   }
+  ],
+  "total_params": 6611402
+ },
+ "zoo_alexnet": {
+  "rows": [
+   {
+    "name": "features.0",
+    "type": "Conv2d",
+    "spec": "3->64, k=11, s=4, p=2",
+    "out": [
+     64,
+     15,
+     15
+    ],
+    "params": 23296,
+    "rf": 11,
+    "jump": 4
+   },
+   {
+    "name": "features.1",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     64,
+     15,
+     15
+    ],
+    "params": 0,
+    "rf": 11,
+    "jump": 4
+   },
+   {
+    "name": "features.2",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     64,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 19,
+    "jump": 8
+   },
+   {
+    "name": "features.3",
+    "type": "Conv2d",
+    "spec": "64->192, k=5, s=1, p=2",
+    "out": [
+     192,
+     7,
+     7
+    ],
+    "params": 307392,
+    "rf": 51,
+    "jump": 8
+   },
+   {
+    "name": "features.4",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     192,
+     7,
+     7
+    ],
+    "params": 0,
+    "rf": 51,
+    "jump": 8
+   },
+   {
+    "name": "features.5",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     192,
+     3,
+     3
+    ],
+    "params": 0,
+    "rf": 67,
+    "jump": 16
+   },
+   {
+    "name": "features.6",
+    "type": "Conv2d",
+    "spec": "192->384, k=3, s=1, p=1",
+    "out": [
+     384,
+     3,
+     3
+    ],
+    "params": 663936,
+    "rf": 99,
+    "jump": 16
+   },
+   {
+    "name": "features.7",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     384,
+     3,
+     3
+    ],
+    "params": 0,
+    "rf": 99,
+    "jump": 16
+   },
+   {
+    "name": "features.8",
+    "type": "Conv2d",
+    "spec": "384->256, k=3, s=1, p=1",
+    "out": [
+     256,
+     3,
+     3
+    ],
+    "params": 884992,
+    "rf": 131,
+    "jump": 16
+   },
+   {
+    "name": "features.9",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     256,
+     3,
+     3
+    ],
+    "params": 0,
+    "rf": 131,
+    "jump": 16
+   },
+   {
+    "name": "features.10",
+    "type": "Conv2d",
+    "spec": "256->256, k=3, s=1, p=1",
+    "out": [
+     256,
+     3,
+     3
+    ],
+    "params": 590080,
+    "rf": 163,
+    "jump": 16
+   },
+   {
+    "name": "features.11",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     256,
+     3,
+     3
+    ],
+    "params": 0,
+    "rf": 163,
+    "jump": 16
+   },
+   {
+    "name": "features.12",
+    "type": "MaxPool2d",
+    "spec": "k=3, s=2",
+    "out": [
+     256,
+     1,
+     1
+    ],
+    "params": 0,
+    "rf": 195,
+    "jump": 32
+   },
+   {
+    "name": "avgpool",
+    "type": "AdaptiveAvgPool2d",
+    "spec": "out=(6, 6)",
+    "out": [
+     256,
+     6,
+     6
+    ],
+    "params": 0,
+    "rf": 195,
+    "jump": 32
+   },
+   {
+    "name": "classifier.1",
+    "type": "Linear",
+    "spec": "9216->4096",
+    "out": [
+     4096
+    ],
+    "params": 37752832,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.2",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     4096
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.4",
+    "type": "Linear",
+    "spec": "4096->4096",
+    "out": [
+     4096
+    ],
+    "params": 16781312,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.5",
+    "type": "ReLU",
+    "spec": "",
+    "out": [
+     4096
+    ],
+    "params": 0,
+    "rf": null,
+    "jump": null
+   },
+   {
+    "name": "classifier.6",
+    "type": "Linear",
+    "spec": "4096->10",
+    "out": [
+     10
+    ],
+    "params": 40970,
+    "rf": null,
+    "jump": null
+   }
+  ],
+  "total_params": 57044810
+ }
+}
