@@ -34,6 +34,8 @@ def evaluate_checkpoint(checkpoint_path: str, model_name: str, norm_type: str = 
     model = get_model(model_name, num_classes=num_classes, in_channels=3, norm_type=norm_type)
     if os.path.exists(checkpoint_path):
         state_dict = torch.load(checkpoint_path, map_location=device)
+        # Older checkpoints carry thop profiling buffers; they are not model weights
+        state_dict = {k: v for k, v in state_dict.items() if not k.endswith(("total_ops", "total_params"))}
         model.load_state_dict(state_dict)
         print("Checkpoint weights loaded successfully.")
     else:

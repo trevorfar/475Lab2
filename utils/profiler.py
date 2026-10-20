@@ -85,10 +85,13 @@ class ModelProfiler:
     def _compute_flops(self) -> Tuple[int, int]:
         """Calculates MACs and FLOPs using PyTorch module hooks or thop."""
         try:
+            import copy
             import thop
-            dummy = torch.randn(*self.input_size, device=self.device)
-            self.model.eval()
-            macs, _ = thop.profile(self.model, inputs=(dummy,), verbose=False)
+            # Profile a CPU copy: thop's hooks fail on CUDA models and leave total_ops/total_params
+            # buffers behind, which would otherwise end up in saved state_dicts. FLOPs are device-independent.
+            model_copy = copy.deepcopy(self.model).cpu().eval()
+            dummy = torch.randn(*self.input_size)
+            macs, _ = thop.profile(model_copy, inputs=(dummy,), verbose=False)
             return int(macs), int(2 * macs)
         except Exception:
             pass
