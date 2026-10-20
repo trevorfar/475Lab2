@@ -3,6 +3,8 @@
 # so the script can be re-launched after an interruption.
 cd "$(dirname "$0")"
 PY=${PY:-python}
+# Windows Python writes redirected stdout as cp1252, which crashes on torchinfo's box-drawing characters
+export PYTHONUTF8=1
 mkdir -p logs results checkpoints plots
 
 run() {
